@@ -133,5 +133,6 @@ poetry.lock
 *.temp
 
 # Django migrations
-apps/*/migrations/*.py
+# apps/*/migrations/*.py   ← comment out or delete this line
 !apps/*/migrations/__init__.py
+!apps/*/migrations/0001_initial.py   
