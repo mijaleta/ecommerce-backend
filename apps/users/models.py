@@ -1,6 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import BaseUserManager
+
+# Add this enum class
+class UserRole(models.TextChoices):
+    ADMIN = 'admin', 'Admin'
+    CUSTOMER = 'customer', 'Customer'
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -23,6 +28,11 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     profile_picture = models.ImageField(upload_to='profiles/', blank=True)
     username = models.CharField(max_length=150, blank=True, null=True)
+    role = models.CharField(  
+        max_length=10, 
+        choices=UserRole.choices, 
+        default=UserRole.CUSTOMER
+    )    
     USERNAME_FIELD = 'email'  
     REQUIRED_FIELDS = []   
     objects = CustomUserManager()  
