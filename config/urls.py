@@ -3,16 +3,17 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from apps.users.views import CustomTokenObtainPairView
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+
+User = get_user_model()  # points to your custom User model
 
 def create_superuser(request):
-    # Change these to your desired username/email/password
-    username = "admin"
     email = "admin@gmail.com"
     password = "admin@123"
     
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username, email, password)
+    if not User.objects.filter(email=email).exists():
+        User.objects.create_superuser(email=email, password=password, is_active=True)
         return HttpResponse("Superuser created")
     return HttpResponse("Superuser already exists")
 
