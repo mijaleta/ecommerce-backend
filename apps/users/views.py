@@ -18,8 +18,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['user'] = {
             'id': self.user.id,
             'email': self.user.email,
-            'username': self.user.username,
-            'phone_number': self.user.phone_number
+            'phone_number': self.user.phone_number,
+            'role': self.user.role
         }
         return data
 
